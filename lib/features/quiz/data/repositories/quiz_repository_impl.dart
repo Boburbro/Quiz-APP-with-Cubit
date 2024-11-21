@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart' as dartz;
-import 'package:quiz_app_with_cubit/core/error/failure.dart';
-import 'package:quiz_app_with_cubit/features/quiz/data/datasource/quiz_remote_datasource.dart';
-import 'package:quiz_app_with_cubit/features/quiz/domain/entities/quiz_entity.dart';
-import 'package:quiz_app_with_cubit/features/quiz/domain/repositories/quiz_repository.dart';
+
+import '../../../../core/error/failure.dart';
+import '../../domain/entities/quiz_entity.dart';
+import '../../domain/repositories/quiz_repository.dart';
+import '../datasource/quiz_remote_datasource.dart';
 
 class QuizRepositoryImpl implements QuizRepository {
   final QuizRemoteDatasource quizRemoteDatasource;

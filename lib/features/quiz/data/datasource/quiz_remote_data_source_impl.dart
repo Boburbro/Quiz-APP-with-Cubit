@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:quiz_app_with_cubit/core/utils/app_url.dart';
-import 'package:quiz_app_with_cubit/features/quiz/data/datasource/quiz_remote_datasource.dart';
-import 'package:quiz_app_with_cubit/features/quiz/data/models/quiz_model.dart';
+import '../../../../core/utils/app_url.dart';
+import 'quiz_remote_datasource.dart';
+import '../models/quiz_model.dart';
 
 class QuizRemoteDataSourceImpl implements QuizRemoteDatasource {
   @override

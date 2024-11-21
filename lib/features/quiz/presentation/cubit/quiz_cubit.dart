@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quiz_app_with_cubit/core/error/failure.dart';
-import 'package:quiz_app_with_cubit/features/quiz/data/models/quiz_model.dart';
-import 'package:quiz_app_with_cubit/features/quiz/domain/usecases/get_quiz_usecase.dart';
+import '../../../../core/error/failure.dart';
+import '../../data/models/quiz_model.dart';
+import '../../domain/usecases/get_quiz_usecase.dart';
 
 part 'quiz_state.dart';
 

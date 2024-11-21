@@ -1,5 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz_app_with_cubit/features/quiz/presentation/pages/question_number_selection_page.dart';
+
+import '../global_widgets/app_backgroun.dart';
+import '../global_widgets/app_bars/simple_app_bar.dart';
+import '../global_widgets/app_card.dart';
+import 'question_number_selection_page.dart';
 
 class DifficultySelectionPage extends StatelessWidget {
   final String selectedCategory;
@@ -12,62 +17,44 @@ class DifficultySelectionPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Select Difficulty",
-          ),
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.blue.shade800, Colors.purple.shade800])),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  "Category: $selectedCategory",
-                  style: const TextStyle(fontSize: 18, color: Colors.white),
-                ),
-                const SizedBox(height: 50),
-                const Text(
-                  "Choose a difficulty",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 22, color: Colors.white),
-                ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: difficulties.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        surfaceTintColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        elevation: 10,
-                        child: ListTile(
-                          title: Center(child: Text(difficulties[index])),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    QuestionNumberSelectionPage(
-                                  selectedCategory: selectedCategory,
-                                  selectedDifficulty: difficulties[index],
-                                ),
+        body: AppBackground(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SimpleAppBar(title: selectedCategory),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Choose a difficulty",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 22, color: Colors.white),
+                    ),
+                    const SizedBox(height: 16),
+                    ...List.generate(
+                      difficulties.length,
+                      (index) => AppCard(
+                        title: difficulties[index],
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => QuestionNumberSelectionPage(
+                                selectedCategory: selectedCategory,
+                                selectedDifficulty: difficulties[index],
                               ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              const SizedBox(),
+              const SizedBox(),
+            ],
           ),
         ),
       ),

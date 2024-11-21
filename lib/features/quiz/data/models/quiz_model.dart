@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:quiz_app_with_cubit/features/quiz/domain/entities/quiz_entity.dart';
+import '../../domain/entities/quiz_entity.dart';
 
 class QuizModel extends QuizEntity {
   QuizModel(

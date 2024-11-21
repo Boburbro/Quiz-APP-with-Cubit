@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app_with_cubit/features/quiz/data/datasource/quiz_remote_data_source_impl.dart';
-import 'package:quiz_app_with_cubit/features/quiz/data/repositories/quiz_repository_impl.dart';
-import 'package:quiz_app_with_cubit/features/quiz/domain/usecases/get_quiz_usecase.dart';
-import 'package:quiz_app_with_cubit/features/quiz/presentation/cubit/quiz_cubit.dart';
-import 'package:quiz_app_with_cubit/features/quiz/presentation/screens/home.dart';
+import 'features/quiz/data/datasource/quiz_remote_data_source_impl.dart';
+import 'features/quiz/data/repositories/quiz_repository_impl.dart';
+import 'features/quiz/domain/usecases/get_quiz_usecase.dart';
+import 'features/quiz/presentation/cubit/quiz_cubit.dart';
+import 'features/quiz/presentation/screens/home.dart';
 
 void main() {
   runApp(const MyApp());

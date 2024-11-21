@@ -1,8 +1,12 @@
 import 'package:cart_stepper/cart_stepper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz_app_with_cubit/features/quiz/presentation/cubit/quiz_cubit.dart';
-import 'package:quiz_app_with_cubit/features/quiz/presentation/screens/questions_screen.dart';
+
+import '../cubit/quiz_cubit.dart';
+import '../global_widgets/app_backgroun.dart';
+import '../global_widgets/app_bars/simple_app_bar.dart';
+import '../screens/questions_screen.dart';
 
 class QuestionNumberSelectionPage extends StatefulWidget {
   final String selectedCategory;
@@ -31,7 +35,7 @@ class _QuestionNumberSelectionPageState
         if (state is QuizLoadingSuccessState) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
+            CupertinoPageRoute(
               builder: (context) => QuestionsScreen(questions: state.quizes),
             ),
           );
@@ -43,78 +47,95 @@ class _QuestionNumberSelectionPageState
           );
         } else if (state is QuizLoadingState) {
           showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => Container(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                content: Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    child: const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 16),
-                          Text(
-                            "Loading...",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                                decoration: TextDecoration.none),
-                          ),
-                        ],
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16), // Spacing between spinner and text
+                      Text(
+                        "Loading...",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87, // Text color
+                        ),
                       ),
-                    ),
-                  ));
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
         }
       },
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(title: const Text("Select Number of Questions")),
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.blue.shade800, Colors.purple.shade800],
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                children: [
-                  Text(
-                    "Category: ${widget.selectedCategory}",
-                    style: const TextStyle(fontSize: 18, color: Colors.white),
+          body: AppBackground(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SimpleAppBar(title: "Count of Questions"),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Category: ${widget.selectedCategory}",
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                      Text(
+                        "Difficulty: ${widget.selectedDifficulty}",
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                      const SizedBox(height: 50),
+                      Center(
+                        child: Column(
+                          children: [
+                            const Text(
+                              "Choose number of questions",
+                              style:
+                                  TextStyle(fontSize: 22, color: Colors.white),
+                            ),
+                            CartStepperInt(
+                              stepper: _counterInit,
+                              size: 45,
+                              axis: Axis.horizontal,
+                              elevation: 7,
+                              value: _counter,
+                              didChangeCount: (count) {
+                                setState(() {
+                                  if (count <= 10) {
+                                    _counter = count;
+                                  }
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "Difficulty: ${widget.selectedDifficulty}",
-                    style: const TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                  const SizedBox(height: 80),
-                  const Text(
-                    "Choose number of questions",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
-                  ),
-                  const SizedBox(height: 26),
-                  Center(
-                    child: CartStepperInt(
-                      stepper: _counterInit,
-                      size: 45,
-                      axis: Axis.horizontal,
-                      elevation: 7,
-                      value: _counter,
-                      didChangeCount: (count) {
-                        setState(() {
-                          if (count <= 10) {
-                            _counter = count;
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 90),
-                  ElevatedButton(
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: ElevatedButton(
                     onPressed: () {
                       context.read<QuizCubit>().fetchQuizzes(
                             widget.selectedCategory,
@@ -127,8 +148,8 @@ class _QuestionNumberSelectionPageState
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
